@@ -105,11 +105,16 @@ extension View {
     }
 
     /// Hides the toolbar background; `toolbarBackgroundVisibility` is
-    /// macOS 15+/iOS 18+, so iOS 17 falls back to `toolbarBackground`.
+    /// macOS 15+/iOS 18+, so macOS 14 and iOS 17 fall back to
+    /// `toolbarBackground`.
     @ViewBuilder
     func compatHiddenToolbarBackground() -> some View {
         #if os(macOS)
-        toolbarBackgroundVisibility(.hidden, for: .automatic)
+        if #available(macOS 15.0, *) {
+            toolbarBackgroundVisibility(.hidden, for: .automatic)
+        } else {
+            toolbarBackground(.hidden, for: .automatic)
+        }
         #else
         if #available(iOS 18.0, *) {
             toolbarBackgroundVisibility(.hidden, for: .automatic)
