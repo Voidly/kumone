@@ -30,3 +30,17 @@ jobs:
         run: |
           ARCHES="arm64 x86_64" FETCH_MLX_METALLIB=1 \
             Scripts/build-app.sh release
+
+      # ditto preserves symlinks (Sparkle.framework) and executable bits;
+      # upload-artifact alone would lose them.
+      - name: Zip app bundle
+        run: |
+          cd .build/app
+          ditto -c -k --sequesterRsrc --keepParent Kumone.app Kumone.zip
+
+      - name: Upload app artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Kumone-macOS14-universal
+          path: .build/app/Kumone.zip
+          retention-days: 14

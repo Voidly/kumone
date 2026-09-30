@@ -158,7 +158,7 @@ if [ -d "$ICON_SOURCE" ]; then
     --enable-on-demand-resources NO \
     --development-region zh-Hans \
     --target-device mac \
-    --minimum-deployment-target 15.0 \
+    --minimum-deployment-target 14.0 \
     --platform macosx >/dev/null
   if [ ! -f "$APP_BUNDLE/Contents/Resources/Assets.car" ]; then
     echo "ERROR: actool did not produce Assets.car" >&2
